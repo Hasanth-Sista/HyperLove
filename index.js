@@ -9,9 +9,14 @@ const PORT = process.env.PORT || 5000
 var router = express.Router();
 var app = express();
 app.use(bodyParser.urlencoded({
-    extended: true
+  limit: 1024 * 1024 * 20,
+  extended: true,
+  parameterLimit: 50000
 }));
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({
+  limit: 1024 * 1024 * 20
+}));
 
 router.get('/getTime', function(req, res){
 	let now = new Date();
@@ -53,20 +58,14 @@ app.get('/getusers', function(request, response) {
 }); 
 
 app.post('/register', function(req, res) {
-  console.log(req.body.username);
-  var sql = 'INSERT INTO users (username) VALUES (';
-
-  console.log(req.body.username);
-
-  /*var data = [req.body.username];
-  connection.query(sql + data + ')', function(err, result) {
+  var sql = 'INSERT INTO users (username) VALUES ("'+req.body.username+'")';
+  connection.query(sql, function(err, result) {
   	if (err){
-  		console.error(err);
   		res.statusCode = 500;
-  		return res.json({ 'status': ['Failed to create user']});
+  		return res.json({ 'message': 'Failed to create user'});
   	}
-  	res.json('status" : "true');
-  });*/
+  	return res.json({'message' : 'User added successfully'});
+  });
 });
 
 app.post('/login', function(request, response) {

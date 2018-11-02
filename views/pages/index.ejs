@@ -26,6 +26,7 @@
 
   function registerUser() {
     $.post("/register",$("#registrationForm").serialize(),function (data) {
+      console.log(data);
       var dataElement = document.getElementById('successMessage');
       dataElement.innerHTML = data['message'];
     });
@@ -33,6 +34,7 @@
 
   function loginUser() {
     $.post("/login",$("#loginForm").serialize() ,function (data) {
+      console.log(data);
       var dataElement = document.getElementById('user');
       dataElement.innerHTML = data['message'];
     });
@@ -48,7 +50,7 @@
       <h3>Registration Form</h3>
     </div>
     <div>
-      <ul><label>User Name : </label><input type="text" id="username" /></ul>
+      <ul><label>User Name : </label><input type="text" id="username" name="username"/></ul>
       <button class="btn" onclick="registerUser()" type="submit">Submit</button>
     </div><br />
     <div>
