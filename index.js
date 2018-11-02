@@ -53,20 +53,20 @@ app.get('/getusers', function(request, response) {
 }); 
 
 app.post('/register', function(req, res) {
-  console.log(req.body.username);
   var sql = 'INSERT INTO users (username) VALUES (';
 
-  console.log(req.body.username);
+  console.log('WHATS UP ' + sql + "'" + req.body.username + "')");
 
-  /*var data = [req.body.username];
-  connection.query(sql + data + ')', function(err, result) {
+  var data = sql + "'" + req.body.username + "')";
+  
+  connection.query(data, function(err, result) {
   	if (err){
   		console.error(err);
   		res.statusCode = 500;
   		return res.json({ 'status': ['Failed to create user']});
   	}
   	res.json('status" : "true');
-  });*/
+  });
 });
 
 app.post('/login', function(request, response) {
