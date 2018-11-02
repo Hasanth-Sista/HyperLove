@@ -1,23 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <% include ../partials/header.ejs %>
 </head>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script>
-  function getTime() {
-      $.get( "/api/getTime", function( data ) {
-        var dateElement = document.getElementById('date');
-        dateElement.innerHTML = data['datetime'];
+<script type="text/javascript">
+  // function getTime() {
+  //   $.get("/api/getTime", function (data) {
+  //     var dateElement = document.getElementById('date');
+  //     dateElement.innerHTML = data['datetime'];
+  //   });
+  // }
+  // getTime();
+
+  $(document).ready(function () {
+    $('#loginForm').hide();
+  });
+
+  function myFunctionHide() {
+    $("#registrationForm").hide();
+    $('#loginForm').show();
+  }
+
+  function registerUser() {
+    $.post("/register",$("#registrationForm").serialize(),function (data) {
+      var dataElement = document.getElementById('successMessage');
+      dataElement.innerHTML = data['message'];
     });
   }
-  getTime();
+
+  function loginUser() {
+    $.post("/login",$("#loginForm").serialize() ,function (data) {
+      var dataElement = document.getElementById('user');
+      dataElement.innerHTML = data['message'];
+    });
+  }
 </script>
 
 <body>
-  <h1> Hello World </h1>
-  <p> Date and Time: <span id="date"> </span> </p>
+
+  <h1>Welcome to HyperLove</h1>
+
+  <form id="registrationForm">
+    <div>
+      <h3>Registration Form</h3>
+    </div>
+    <div>
+      <ul><label>User Name : </label><input type="text" id="username" /></ul>
+      <button class="btn" onclick="registerUser()" type="submit">Submit</button>
+    </div><br />
+    <div>
+      <button class="btn" id="buttonForLogin" type="button" onclick="myFunctionHide()">Click here if you registered!</button>
+    </div>
+  </form>
+
+
+  <form id="loginForm">
+    <div>
+      <h3>Login Form</h3>
+    </div>
+    <div>
+      <label for="user">User Name</label>
+      <input type="user" id="userName">
+    </div>
+    <button class="btn" onclick="loginUser()" type="submit">Sign in</button>
+  </form>
+
+  <h3 id="successMessage"></h3>
+
+  <form id="successForm">
+    <div id="user"></div>
+  </form>
+
 </body>
 
 </html>

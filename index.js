@@ -7,6 +7,11 @@ var bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000
 
 var router = express.Router();
+var app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 router.get('/getTime', function(req, res){
 	let now = new Date();
@@ -28,9 +33,6 @@ var connection = mysql.createConnection({
   // }
 });
 
-var app = express();
-app.use(bodyParser.json({ type: 'application/json'}));
-
 connection.connect();
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -50,6 +52,7 @@ app.get('/getusers', function(request, response) {
 }); 
 
 app.post('/register', function(req, res) {
+  console.log(req.body.username);
   var sql = 'INSERT INTO users (username) VALUES (';
 
   console.log(req.body.username);
