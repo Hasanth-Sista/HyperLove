@@ -2,6 +2,7 @@ const express = require('express')
 const date = require('date-and-time')
 const path = require('path')
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5000
 
@@ -33,7 +34,8 @@ connection.connect();
 
 app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs');
+  .set('view engine', 'ejs')
+  .use(bodyParser.json());
 
 app.get('/getusers', function(request, response) {
   
@@ -52,7 +54,15 @@ app.post('/register', function(request, response) {
 }) 
 
 app.post('/login', function(request, response) {
-	
+
+	username = request.body.username;
+	console.log(username);
+	connection.query("SELECT * from users where username = 'Albertff' ", function(err, rows, fields) {
+      if (err) throw err;
+      console.log(rows);
+      response.json({'user' : rows});
+       
+    });
 }) 
 
 app.get('/', (req, res) => res.render('pages/index'))
