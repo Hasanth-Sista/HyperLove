@@ -9,14 +9,9 @@ const PORT = process.env.PORT || 5000
 var router = express.Router();
 var app = express();
 app.use(bodyParser.urlencoded({
-  limit: 1024 * 1024 * 20,
-  extended: true,
-  parameterLimit: 50000
+    extended: true
 }));
-
-app.use(bodyParser.json({
-  limit: 1024 * 1024 * 20
-}));
+app.use(bodyParser.json());
 
 router.get('/getTime', function(req, res){
 	let now = new Date();
@@ -58,21 +53,28 @@ app.get('/getusers', function(request, response) {
 }); 
 
 app.post('/register', function(req, res) {
-  var sql = 'INSERT INTO users (username) VALUES ("'+req.body.username+'")';
-  connection.query(sql, function(err, result) {
+  var sql = 'INSERT INTO users (username) VALUES (';
+
+  console.log('WHATS UP ' + sql + "'" + req.body.username + "')");
+
+  var data = sql + "'" + req.body.username + "')";
+  
+  connection.query(data, function(err, result) {
   	if (err){
+  		console.error(err);
   		res.statusCode = 500;
-  		res.json({ 'message': 'Failed to create user'});
+  		return res.json({ 'status': ['Failed to create user']});
   	}
-  	res.json({'message' : 'User added successfully'});
+  	res.json('status" : "true');
   });
 });
 
 app.post('/login', function(request, response) {
 
 	username = request.body.username;
+	//username = "Albert";
 	connection.query("SELECT * from users where username = '"+username+"'", function(err, rows, fields) {
-      if (err){ throw err};
+      if (err) throw err;
       console.log(rows);
       resp = {}
       if (rows.length == 0) {
