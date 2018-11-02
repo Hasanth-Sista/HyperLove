@@ -29,34 +29,22 @@ var connection = mysql.createConnection({
 
 var app = express();
 
-
-
 connection.connect();
-
-// var connection = mysql.createConnection(process.env.JAWSDB_URL);
-
-// connection.connect();
-
-// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-//   if (err) throw err;
-
-//   console.log('The solution is: ', rows[0].solution);
-// });
-
-// connection.end();
-
 
 app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
 
 app.get('/db', function(request, response) {
-  response.send('Hello World!!!! HOLA MUNDOOOOO!!!');
+  
+  
   connection.query('SELECT * from users', function(err, rows, fields) {
       if (err) throw err;
       console.log(rows);
-       //response.send('The solution is: ', rows[0].solution);
+      response.json({'user' : rows});
+       
     });
+  
 });  
 
 app.get('/', (req, res) => res.render('pages/index'))
