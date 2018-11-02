@@ -70,26 +70,25 @@ app.post('/register', function(req, res) {
 
 app.post('/login', function(request, response) {
 
-	// // username = request.body.username;
-	// // //username = "Albert";
-	// // connection.query("SELECT * from users where username = '"+username+"'", function(err, rows, fields) {
-  // //     if (err){ throw err};
-  // //     console.log(rows);
-  // //     resp = {}
-  // //     if (rows.length == 0) {
-  // //     	resp = {
-  // //     		"STATUS": "FAILED",
-  // //     		"MESSAGE": "No User exists with this user name"
-  // //     	}
-  // //     } else {
-  // //     	resp = {
-  // //     		"STATUS" : "SUCCESS",
-  // //     		"USER": rows[0]
-  // //     	}
-  // //     }
-  // //     response.json(resp);
+	username = request.body.username;
+	connection.query("SELECT * from users where username = '"+username+"'", function(err, rows, fields) {
+      if (err){ throw err};
+      console.log(rows);
+      resp = {}
+      if (rows.length == 0) {
+      	resp = {
+      		"STATUS": "FAILED",
+      		"MESSAGE": "No User exists with this user name"
+      	}
+      } else {
+      	resp = {
+      		"STATUS" : "SUCCESS",
+      		"USER": rows[0]
+      	}
+      }
+      response.json(resp);
        
-  //   });
+    });
 }) ;
 
 
