@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs');
 
-app.get('/db', function(request, response) {
+app.get('/getusers', function(request, response) {
   
   
   connection.query('SELECT * from users', function(err, rows, fields) {
@@ -45,7 +45,15 @@ app.get('/db', function(request, response) {
        
     });
   
-});  
+}); 
+
+app.post('/register', function(request, response) {
+
+}) 
+
+app.post('/login', function(request, response) {
+	
+}) 
 
 app.get('/', (req, res) => res.render('pages/index'))
   .use('/api', router)
