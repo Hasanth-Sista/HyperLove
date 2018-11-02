@@ -62,23 +62,34 @@ app.post('/register', function(req, res) {
   connection.query(sql, function(err, result) {
   	if (err){
   		res.statusCode = 500;
-  		return res.json({ 'message': 'Failed to create user'});
+  		res.json({ 'message': 'Failed to create user'});
   	}
-  	return res.json({'message' : 'User added successfully'});
+  	res.json({'message' : 'User added successfully'});
   });
 });
 
 app.post('/login', function(request, response) {
 
-
-	username = request.body.username;
-	console.log(username);
-	connection.query("SELECT * from users where username = 'Albertff' ", function(err, rows, fields) {
-      if (err) throw err;
-      console.log(rows);
-      response.json({'user' : rows});
+	// // username = request.body.username;
+	// // //username = "Albert";
+	// // connection.query("SELECT * from users where username = '"+username+"'", function(err, rows, fields) {
+  // //     if (err){ throw err};
+  // //     console.log(rows);
+  // //     resp = {}
+  // //     if (rows.length == 0) {
+  // //     	resp = {
+  // //     		"STATUS": "FAILED",
+  // //     		"MESSAGE": "No User exists with this user name"
+  // //     	}
+  // //     } else {
+  // //     	resp = {
+  // //     		"STATUS" : "SUCCESS",
+  // //     		"USER": rows[0]
+  // //     	}
+  // //     }
+  // //     response.json(resp);
        
-    });
+  //   });
 }) ;
 
 
